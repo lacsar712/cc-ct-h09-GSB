@@ -1,21 +1,20 @@
-from desk.blank_tool import (
-    accept_blank_from_api,
-    accept_blank_from_page,
-    explain,
-    is_blankish,
-    steal_fill_before_save,
-    wants_half_stub,
-)
+"""H09 fixed: 归一化只做 trim；空刀号由 API 在写入前挡回。
+
+不再 seed 半截空行，不再把空刀号改写成自动代名。
+"""
+
+from desk.blank_tool import is_blankish, normalize_tool_code
+
 
 def normalize_tool(tool_code: str, source: str = "api") -> str:
-    if source == "page":
-        return accept_blank_from_page(tool_code)
-    if source == "save":
-        return steal_fill_before_save(tool_code)
-    return accept_blank_from_api(tool_code)
+    """各来源统一只 trim；空刀号原样返回空串，由 API 挡回。"""
+    return normalize_tool_code(tool_code)
+
 
 def should_seed_stub(raw: str) -> bool:
-    return wants_half_stub() and is_blankish(raw)
+    """已拆除：任何输入都不再触发半截空行。"""
+    return False
+
 
 def note(tool_code: str) -> str:
-    return explain() if is_blankish(tool_code) else ""
+    return ""

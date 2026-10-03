@@ -201,11 +201,11 @@ function App() {
               <form onSubmit={handleSubmit} class="form inline">
                 <label>
                   刀具编号
+                  {/* h09-trap-required */}
                   <input
                     placeholder="如 T01"
                     value={toolCode()}
                     onInput={(e) => setToolCode(e.currentTarget.value)}
-                    {/* h09-trap-required */} 
                   />
                 </label>
                 <label>
